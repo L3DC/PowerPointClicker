@@ -1,0 +1,56 @@
+
+/*
+ * @author: Matthew Johnson
+ * 
+ * This program is designed to serve as a clicker, for programs such
+ * as PowerPoint. One finger clicks forward and two fingers clicks backwards.
+ * Five fingers escapes out of the slide show and eight fingers quit the Clicker.
+ * 
+ */
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import com.leapmotion.leap.*;
+
+
+public class Clicker{
+
+  Listener listener = new Listener();
+	Controller controller = new Controller();
+	
+	public static void main (String[] args) throws InterruptedException, AWTException 
+	{
+		Robot robot = new Robot();
+		Controller controller = new Controller();
+		
+		while(true) {
+			Frame frame = controller.frame();
+			
+			if(frame.fingers().count() == 1) {
+						Thread.sleep(300);
+						robot.keyPress(KeyEvent.VK_RIGHT);
+						Thread.sleep(1);
+						robot.keyRelease(KeyEvent.VK_RIGHT);
+						Thread.sleep(2000);
+			} else if(frame.fingers().count() == 2) {
+						Thread.sleep(300);
+						robot.keyPress(KeyEvent.VK_LEFT);
+						Thread.sleep(1);
+						robot.keyRelease(KeyEvent.VK_LEFT);
+						Thread.sleep(2000);
+					} else if(frame.fingers().count() == 5) {
+						Thread.sleep(300);
+						robot.keyPress(KeyEvent.VK_ESCAPE);
+						Thread.sleep(1);
+						robot.keyRelease(KeyEvent.VK_ESCAPE);
+						Thread.sleep(2000);
+					} else if(frame.fingers().count() >= 8) {
+						break;
+					}
+			}	
+	}
+}
+   
+	
+	
